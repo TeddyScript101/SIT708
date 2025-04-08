@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">bottomNav</string>
+    <string name="title_home">Home</string>
+    <string name="title_add_task">Add Task</string>
+</resources>
