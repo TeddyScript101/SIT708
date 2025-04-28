@@ -1,0 +1,48 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quizCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="6dp"
+    android:radius="16dp"
+    android:layout_marginBottom="16dp"
+    android:backgroundTint="#1E3A8A"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/quizTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quiz Title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/quizDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quiz description"
+            android:textColor="#E0E0E0"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/startQuizButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Quiz"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4CAF50"
+            android:drawableEnd="@drawable/baseline_arrow_circle_right_24"
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
