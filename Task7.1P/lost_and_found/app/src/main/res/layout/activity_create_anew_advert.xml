@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_create_new_advert"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post Type:"
+            android:layout_marginBottom="8dp" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_type"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/radio_lost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lost" />
+
+            <RadioButton
+                android:id="@+id/radio_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Found" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter name"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_box" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone:"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/input_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="Enter phone number"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_box" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description:"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/input_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter description"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:minLines="3"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_box" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date:"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/input_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select date"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_box" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location:"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/input_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter location"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_box" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
+</ScrollView>

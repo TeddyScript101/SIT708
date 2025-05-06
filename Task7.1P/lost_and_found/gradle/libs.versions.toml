@@ -1,0 +1,39 @@
+[versions]
+agp = "8.3.2" # Updated to latest stable (8.9.0 has known issues with Room)
+kotlin = "1.9.22" # Updated to match AGP compatibility
+room = "2.6.1" # Added Room version
+
+# Test versions
+junit = "4.13.2"
+junitVersion = "1.1.5" # Updated to current stable
+espressoCore = "3.5.1" # Updated to current stable
+
+# AndroidX versions
+appcompat = "1.6.1" # Updated to current stable
+material = "1.11.0" # Updated to current stable
+activity = "1.8.2" # Updated to current stable
+constraintlayout = "2.1.4"
+activityVersion = "1.10.1" # Updated and fixed typo in reference name
+
+[libraries]
+# Test libraries
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+# AndroidX libraries
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" } # Added -ktx suffix
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" } # Fixed reference
+
+# Room components
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activityVersion" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
