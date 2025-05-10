@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2196F3"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome,"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/letsChatText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Let's Chat!"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:id="@+id/messageInput"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:layout_marginTop="100dp"
+
+        android:background="@android:drawable/edit_text"
+        android:padding="12dp"
+        android:textColor="#000"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/goButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Go"
+        android:backgroundTint="#4CAF50"
+        android:textColor="@android:color/white"/>
+</LinearLayout>
