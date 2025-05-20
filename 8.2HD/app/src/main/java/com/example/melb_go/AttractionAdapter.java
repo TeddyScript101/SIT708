@@ -17,10 +17,16 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.Vi
 
     private Context context;
     private List<TouristAttraction> attractionList;
+    private OnAttractionClickListener listener;
 
-    public AttractionAdapter(Context context, List<TouristAttraction> list) {
+    public interface OnAttractionClickListener {
+        void onAttractionClick(String attractionId);
+    }
+
+    public AttractionAdapter(Context context, List<TouristAttraction> list, OnAttractionClickListener listener) {
         this.context = context;
         this.attractionList = list;
+        this.listener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -34,6 +40,7 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.Vi
             themeText = view.findViewById(R.id.themeText);
         }
     }
+
     public void clearAttractions() {
         attractionList.clear();
         notifyDataSetChanged();
@@ -51,6 +58,12 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.Vi
         holder.featureName.setText(attraction.getFeatureName());
         holder.themeText.setText(attraction.getTheme() + " - " + attraction.getSubTheme());
         Glide.with(context).load(attraction.getImageUrl()).into(holder.imageView);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onAttractionClick(attraction.getId());
+            }
+        });
     }
 
     public void addAttractions(List<TouristAttraction> newAttractions) {

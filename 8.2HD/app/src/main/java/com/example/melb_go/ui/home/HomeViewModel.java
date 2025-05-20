@@ -28,9 +28,19 @@ public class HomeViewModel extends ViewModel {
 
     private String selectedTheme = "Place of Worship";
 
+
+
+    public void setSearchQuery(String query) {
+//        this.searchQuery = query;
+        currentPage = 1;
+        isLastPage = false;
+        fullAttractionList.clear();
+        repository.setSearchQuery(query);
+    }
+
     public HomeViewModel() {
         repository = new TouristAttractionRepository();
-        loadAttractions(currentPage, null);  // Load all initially
+        loadAttractions(currentPage, selectedTheme);
         loadThemes();
     }
 
@@ -69,6 +79,9 @@ public class HomeViewModel extends ViewModel {
 
     public void loadFirstPage() {
         currentPage = 1;
+        isLastPage = false;
+        fullAttractionList.clear();
+        loadAttractions(currentPage, selectedTheme);
 
     }
 

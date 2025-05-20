@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class TouristAttraction {
 
+    @SerializedName("_id")
+    private String id;
+
     @SerializedName("theme")
     private String theme;
 
@@ -19,8 +22,11 @@ public class TouristAttraction {
     @SerializedName("image")
     private String imageUrl;
 
-    public TouristAttraction() {}
-    public TouristAttraction(String theme, String subTheme, String featureName, String coordinates, String imageUrl) {
+    public TouristAttraction() {
+    }
+
+    public TouristAttraction(String id, String theme, String subTheme, String featureName, String coordinates, String imageUrl) {
+        this.id = id;
         this.theme = theme;
         this.subTheme = subTheme;
         this.featureName = featureName;
@@ -28,7 +34,10 @@ public class TouristAttraction {
         this.imageUrl = imageUrl;
     }
 
-    // Getters
+    public String getId() {
+        return id;
+    }
+
     public String getTheme() {
         return theme;
     }

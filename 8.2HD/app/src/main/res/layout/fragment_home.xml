@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/searchEditText"
+        android:hint="Search attractions..."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:padding="8dp"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,6 +10,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TouristAttractionRepository {
+    private String searchQuery = null;
+
+    public void setSearchQuery(String query) {
+        this.searchQuery = query;
+    }
 
     public interface CallbackListener {
         void onSuccess(List<TouristAttraction> data);
@@ -21,7 +26,7 @@ public class TouristAttractionRepository {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
         // Call Retrofit method with theme param (can be null)
-        apiService.getAttractions(page, theme).enqueue(new Callback<ApiResponse>() {
+        apiService.getAttractions(page, theme,searchQuery).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

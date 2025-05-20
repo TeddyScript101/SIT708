@@ -1,20 +1,27 @@
 package com.example.melb_go.ui.home;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.melb_go.AttractionAdapter;
+import com.example.melb_go.AttractionDetailFragment;
 import com.example.melb_go.R;
 
 import java.util.ArrayList;
@@ -25,15 +32,48 @@ public class HomeFragment extends Fragment {
     private AttractionAdapter adapter;
     private RecyclerView recyclerView;
 
+    private Handler searchHandler = new Handler(Looper.getMainLooper());
+    private Runnable searchRunnable;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        EditText searchEditText = root.findViewById(R.id.searchEditText);
 
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (searchRunnable != null) {
+                    searchHandler.removeCallbacks(searchRunnable);
+                }
+                searchRunnable = () -> {
+                    String query = s.toString().trim();
+                    homeViewModel.setSearchQuery(query);
+                    adapter.clearAttractions();
+                    homeViewModel.loadFirstPage();
+                };
+                searchHandler.postDelayed(searchRunnable, 1000); // debounce: 1 sec
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AttractionAdapter(getContext(), new ArrayList<>());
+        adapter = new AttractionAdapter(getContext(), new ArrayList<>(), attractionId -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("attraction_id", attractionId);
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_navigation_home_to_detailFragment, bundle);
+        });
+
         recyclerView.setAdapter(adapter);
 
         Spinner themeSpinner = root.findViewById(R.id.themeSpinner);
@@ -78,7 +118,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Add scroll listener for pagination
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -101,5 +140,9 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        homeViewModel.loadFirstPage();
+    }
 }
