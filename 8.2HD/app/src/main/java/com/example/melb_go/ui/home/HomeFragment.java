@@ -20,9 +20,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.melb_go.api.ApiService;
 import com.example.melb_go.AttractionAdapter;
-import com.example.melb_go.AttractionDetailFragment;
 import com.example.melb_go.R;
+import com.example.melb_go.api.RetrofitClient;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,8 @@ public class HomeFragment extends Fragment {
     private Handler searchHandler = new Handler(Looper.getMainLooper());
     private Runnable searchRunnable;
 
+    ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
 
 
     @Override
@@ -44,7 +47,8 @@ public class HomeFragment extends Fragment {
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -61,22 +65,27 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
         });
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = new ViewModelProvider(this, new HomeViewModelFactory(requireContext()))
+                .get(HomeViewModel.class);
 
         recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        String token = getContext().getSharedPreferences("auth_prefs", getContext().MODE_PRIVATE)
+                .getString("auth_token", null);
         adapter = new AttractionAdapter(getContext(), new ArrayList<>(), attractionId -> {
             Bundle bundle = new Bundle();
             bundle.putString("attraction_id", attractionId);
             Navigation.findNavController(requireView())
                     .navigate(R.id.action_navigation_home_to_detailFragment, bundle);
-        });
+        }, apiService, token);
 
         recyclerView.setAdapter(adapter);
 
         Spinner themeSpinner = root.findViewById(R.id.themeSpinner);
+
 
         homeViewModel.getThemeList().observe(getViewLifecycleOwner(), themes -> {
             if (themes != null && !themes.isEmpty()) {
@@ -92,10 +101,14 @@ public class HomeFragment extends Fragment {
         homeViewModel.loadThemes();
 
         themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            boolean isFirstLoad = true;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedTheme = (String) parent.getItemAtPosition(position);
-
+                if (isFirstLoad) {
+                    isFirstLoad = false;
+                    return;
+                }
                 homeViewModel.setSelectedTheme(selectedTheme);
 
                 adapter.clearAttractions();
@@ -140,6 +153,7 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
     @Override
     public void onResume() {
         super.onResume();

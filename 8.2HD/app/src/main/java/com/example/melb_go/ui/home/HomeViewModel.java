@@ -1,13 +1,14 @@
 package com.example.melb_go.ui.home;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.melb_go.TouristAttraction;
-import com.example.melb_go.TouristAttractionRepository;
+import com.example.melb_go.model.TouristAttraction;
+import com.example.melb_go.repository.TouristAttractionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public class HomeViewModel extends ViewModel {
 
     private static final String TAG = "HomeViewModel";
+
+    private final Context context;
 
     private MutableLiveData<List<TouristAttraction>> attractionList = new MutableLiveData<>();
     private MutableLiveData<List<String>> themeList = new MutableLiveData<>();
@@ -26,11 +29,14 @@ public class HomeViewModel extends ViewModel {
     private boolean isLoading = false;
     private boolean isLastPage = false;
 
+    private final String token;
+
     private String selectedTheme = "Place of Worship";
 
 
 
     public void setSearchQuery(String query) {
+        if (query.equals(repository.getSearchQuery())) return;
 //        this.searchQuery = query;
         currentPage = 1;
         isLastPage = false;
@@ -38,10 +44,13 @@ public class HomeViewModel extends ViewModel {
         repository.setSearchQuery(query);
     }
 
-    public HomeViewModel() {
-        repository = new TouristAttractionRepository();
-        loadAttractions(currentPage, selectedTheme);
-        loadThemes();
+    public HomeViewModel(Context context) {
+        this.token = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+                .getString("auth_token", null);
+        this.context = context.getApplicationContext();
+        repository = new TouristAttractionRepository(token);
+//        loadAttractions(currentPage, selectedTheme);
+//        loadThemes();
     }
 
     public LiveData<List<TouristAttraction>> getAttractionList() {
@@ -89,8 +98,7 @@ public class HomeViewModel extends ViewModel {
     private void loadAttractions(int page, String theme) {
         isLoading = true;
         Log.d(TAG, "Loading page: " + page + ", theme: " + theme);
-
-        repository.fetchAttractions(page, theme, new TouristAttractionRepository.CallbackListener() {
+        repository.fetchAttractions(token, page, theme, new TouristAttractionRepository.CallbackListener() {
             @Override
             public void onSuccess(List<TouristAttraction> data) {
                 isLoading = false;

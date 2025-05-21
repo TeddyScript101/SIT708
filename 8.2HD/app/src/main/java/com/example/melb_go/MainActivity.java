@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.melb_go.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,9 +28,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_bookmarks, R.id.navigation_settings
         ).build();
 
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
+
+    public void switchToHomeTab() {
+        BottomNavigationView bottomNav = findViewById(R.id.nav_view);
+        if (bottomNav != null) {
+            bottomNav.setSelectedItemId(R.id.navigation_home);
+        }
     }
 }
