@@ -4,16 +4,37 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.melb_go.model.TouristAttraction;
+import com.example.melb_go.repository.TouristAttractionRepository;
+
+import java.util.List;
+
 public class BookmarksViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<List<TouristAttraction>> bookmarksLiveData = new MutableLiveData<>();
+    private TouristAttractionRepository repository;
 
-    public BookmarksViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+    public void init(String token) {
+        if (repository != null) return;
+        repository = new TouristAttractionRepository(token);
+        fetchBookmarks();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    private void fetchBookmarks() {
+        repository.fetchBookmarks(new TouristAttractionRepository.CallbackListener() {
+            @Override
+            public void onSuccess(List<TouristAttraction> data) {
+                bookmarksLiveData.setValue(data);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                bookmarksLiveData.setValue(null);
+            }
+        });
+    }
+
+    public LiveData<List<TouristAttraction>> getBookmarks() {
+        return bookmarksLiveData;
     }
 }

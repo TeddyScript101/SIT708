@@ -84,54 +84,22 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.Vi
         });
 
         holder.bookmarkIcon.setOnClickListener(v -> {
-            boolean currentState = attraction.isBookmarked();
-
-            if (!currentState) {
-
-                apiService.bookmarkAttraction(attraction.getId(), "Bearer " + token)
-                        .enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
-                                    attraction.setBookmarked(true);
-                                    notifyItemChanged(position);
-                                    Toast.makeText(context, "Bookmarked successfully", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(context, "Please Login to enjoy the bookmark feature", Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Toast.makeText(context, "Bookmark API error", Toast.LENGTH_SHORT).show();
-                                Log.e("Bookmark", "API error", t);
-                            }
-                        });
-            } else {
-                apiService.unbookmarkAttraction(attraction.getId(), "Bearer " + token)
-                        .enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
-                                    attraction.setBookmarked(false);
-                                    notifyItemChanged(position);
-                                    Toast.makeText(context, "Removed from bookmarks", Toast.LENGTH_SHORT).show();
-                                    Log.d("Bookmark", "Unbookmarked successfully");
-                                } else {
-                                    Toast.makeText(context, "Failed to unbookmark", Toast.LENGTH_SHORT).show();
-                                    Log.e("Bookmark", "Failed to unbookmark: " + response.code());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Toast.makeText(context, "Unbookmark API error", Toast.LENGTH_SHORT).show();
-                                Log.e("Bookmark", "API error", t);
-                            }
-                        });
-            }
+            BookmarkManager.toggleBookmark(
+                    holder.itemView.getContext(),
+                    attraction,
+                    apiService,
+                    token,
+                    true,
+                    () -> {
+                        holder.bookmarkIcon.setImageResource(
+                                attraction.isBookmarked() ? R.drawable.filledheart : R.drawable.heart
+                        );
+                    },
+                    () -> {
+                    }
+            );
         });
+
 
 
     }

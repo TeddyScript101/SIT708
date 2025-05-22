@@ -108,5 +108,29 @@ public class TouristAttractionRepository {
         });
     }
 
+    public void fetchBookmarks(CallbackListener listener) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        String authHeader = token != null ? "Bearer " + token : null;
+
+        apiService.getAllBookmarks(authHeader).enqueue(new Callback<List<TouristAttraction>>() {
+            @Override
+            public void onResponse(Call<List<TouristAttraction>> call, Response<List<TouristAttraction>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("Repo", "Bookmarks fetched: " + response.body().size());
+                    listener.onSuccess(response.body());
+                } else {
+                    Log.e("Repository", "Response error: " + response.code() + " " + response.message());
+                    listener.onFailure(new Exception("Failed to fetch bookmarks"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TouristAttraction>> call, Throwable t) {
+                listener.onFailure(t);
+            }
+        });
+    }
+
+
 
 }

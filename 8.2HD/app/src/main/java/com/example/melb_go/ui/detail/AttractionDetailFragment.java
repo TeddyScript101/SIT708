@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.melb_go.BookmarkManager;
 import com.example.melb_go.api.ApiService;
 import com.example.melb_go.R;
 import com.example.melb_go.api.RetrofitClient;
@@ -93,45 +94,28 @@ public class AttractionDetailFragment extends Fragment {
                     );
 
                     bookmarkIcon.setOnClickListener(v -> {
-                        boolean currentlyBookmarked = attraction.isBookmarked();
-                        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
                         String token = requireContext()
                                 .getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
                                 .getString("auth_token", null);
 
-                        if (!currentlyBookmarked) {
-                            apiService.bookmarkAttraction(attraction.getId(), "Bearer " + token)
-                                    .enqueue(new Callback<Void>() {
-                                        @Override
-                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                            if (response.isSuccessful()) {
-                                                attraction.setBookmarked(true);
-                                                bookmarkIcon.setImageResource(R.drawable.filledheart);
-                                            }
-                                        }
+                        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
-                                        @Override
-                                        public void onFailure(Call<Void> call, Throwable t) {
-                                            Log.e("Bookmark", "Failed to bookmark", t);
-                                        }
-                                    });
-                        } else {
-                            apiService.unbookmarkAttraction(attraction.getId(), "Bearer " + token)
-                                    .enqueue(new Callback<Void>() {
-                                        @Override
-                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                            if (response.isSuccessful()) {
-                                                attraction.setBookmarked(false);
-                                                bookmarkIcon.setImageResource(R.drawable.heart);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<Void> call, Throwable t) {
-                                            Log.e("Bookmark", "Failed to unbookmark", t);
-                                        }
-                                    });
-                        }
+                        BookmarkManager.toggleBookmark(
+                                requireContext(),
+                                attraction,
+                                apiService,
+                                token,
+                                true, // showToast
+                                () -> {
+                                    // Success – update heart icon based on new state
+                                    bookmarkIcon.setImageResource(
+                                            attraction.isBookmarked() ? R.drawable.filledheart : R.drawable.heart
+                                    );
+                                },
+                                () -> {
+                                    // Failure – optionally handle UI changes or retry
+                                }
+                        );
                     });
 
                     double lat = attraction.getLat().doubleValue();

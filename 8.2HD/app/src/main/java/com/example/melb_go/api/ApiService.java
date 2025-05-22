@@ -31,6 +31,11 @@ public interface ApiService {
             @Header("Authorization") String token
     );
 
+    @GET("/api/bookmark")
+    Call<List<TouristAttraction>> getAllBookmarks(
+            @Header("Authorization") String token
+    );
+
     @POST("/api/bookmark/{id}")
     Call<Void> bookmarkAttraction(
             @Path("id") String attractionId,

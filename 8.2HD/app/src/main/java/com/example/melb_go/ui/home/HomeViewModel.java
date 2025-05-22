@@ -37,7 +37,6 @@ public class HomeViewModel extends ViewModel {
 
     public void setSearchQuery(String query) {
         if (query.equals(repository.getSearchQuery())) return;
-//        this.searchQuery = query;
         currentPage = 1;
         isLastPage = false;
         fullAttractionList.clear();
@@ -49,8 +48,6 @@ public class HomeViewModel extends ViewModel {
                 .getString("auth_token", null);
         this.context = context.getApplicationContext();
         repository = new TouristAttractionRepository(token);
-//        loadAttractions(currentPage, selectedTheme);
-//        loadThemes();
     }
 
     public LiveData<List<TouristAttraction>> getAttractionList() {
@@ -69,7 +66,6 @@ public class HomeViewModel extends ViewModel {
         return isLastPage;
     }
 
-    // Set theme filter and reload attractions from page 1
     public void setSelectedTheme(String theme) {
         if ((theme == null && selectedTheme != null) || (theme != null && !theme.equals(selectedTheme))) {
             selectedTheme = theme;
