@@ -1,0 +1,96 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollViewNewPlanning"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnSelectAttractions"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Select Attractions"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAttractions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Starting Point:"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/btnSelectStartingPoint"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Pick Location"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:id="@+id/tvSelectedLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Starting Point selected"
+                android:padding="8dp"
+                android:textStyle="italic"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <EditText
+                    android:id="@+id/etMaxJourneyHours"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Max Hours"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/etMaxJourneyMins"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Max Minutes"
+                    android:layout_marginStart="8dp"
+                    android:padding="8dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnOptimizeRoute"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Submit" />
+        </LinearLayout>
+
+    </FrameLayout>
+</ScrollView>

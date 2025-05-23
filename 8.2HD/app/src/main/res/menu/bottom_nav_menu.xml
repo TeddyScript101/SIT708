@@ -11,14 +11,16 @@
         android:icon="@drawable/heart"
         android:title="@string/title_bookmarks" />
 
-    <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/settings"
-        android:title="@string/title_settings" />
+
 
     <item
         android:id="@+id/navigation_routeAssistant"
         android:icon="@drawable/baseline_alt_route_24"
         android:title="@string/title_routeAssistant" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/settings"
+        android:title="@string/title_settings" />
 
 </menu>

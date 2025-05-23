@@ -1,4 +1,4 @@
-package com.example.melb_go;
+package com.example.melb_go.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.melb_go.BookmarkManager;
+import com.example.melb_go.R;
 import com.example.melb_go.api.ApiService;
 import com.example.melb_go.model.TouristAttraction;
 
@@ -28,13 +30,14 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
     public interface OnAttractionClickListener {
         void onClick(String attractionId);
     }
-
-    public BookmarkAdapter(Context context, List<TouristAttraction> attractions, ApiService apiService, String token, OnAttractionClickListener clickListener) {
+    private final Runnable onBookmarkChanged;
+    public BookmarkAdapter(Context context, List<TouristAttraction> attractions, ApiService apiService, String token, OnAttractionClickListener clickListener, Runnable onBookmarkChanged) {
         this.context = context;
-        this.data = attractions; // ✅ Corrected: assign attractions
+        this.data = attractions;
         this.apiService = apiService;
         this.token = token;
-        this.clickListener = clickListener; // ✅ Assign the listener
+        this.clickListener = clickListener;
+        this.onBookmarkChanged = onBookmarkChanged;
     }
 
     public void updateData(List<TouristAttraction> newData) {
@@ -82,6 +85,12 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
                         Toast.makeText(context,
                                 attraction.isBookmarked() ? "Bookmarked" : "Unbookmarked",
                                 Toast.LENGTH_SHORT).show();
+                        if (!attraction.isBookmarked() && onBookmarkChanged != null) {
+                            onBookmarkChanged.run();
+                        } else {
+                            notifyItemChanged(holder.getAdapterPosition());
+                        }
+
                     },
                     () -> Toast.makeText(context, "Failed to update bookmark", Toast.LENGTH_SHORT).show()
             );

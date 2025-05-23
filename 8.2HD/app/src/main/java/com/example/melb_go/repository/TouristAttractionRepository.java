@@ -44,7 +44,6 @@ public class TouristAttractionRepository {
 
     public void fetchAttractions(String token, int page, String theme, CallbackListener listener) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Log.d("tokenDebug", token);
         if (token != null) {
             token = "Bearer " + token;
         }

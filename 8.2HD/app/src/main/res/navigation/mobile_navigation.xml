@@ -45,7 +45,59 @@
         android:id="@+id/navigation_routeAssistant"
         android:name="com.example.melb_go.ui.routeAssistant.RouteAssistantFragment"
         android:label="@string/title_routeAssistant"
-        tools:layout="@layout/fragment_route_assistant" />
+        tools:layout="@layout/fragment_route_assistant">
+    <action
+        android:id="@+id/action_routeAssistantFragment_to_newPlanningFragment"
+        app:destination="@id/newPlanningFragment" />
+        <action
+            android:id="@+id/action_routeAssistantFragment_to_planListFragment"
+            app:destination="@id/planListFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/planListFragment"
+        android:name="com.example.melb_go.ui.planList.PlanListFragment"
+        android:label="Saved Plans" >
 
+        <action
+            android:id="@+id/action_planList_to_planDetail"
+            app:destination="@id/planDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/planDetailFragment"
+        android:name="com.example.melb_go.ui.planDetail.PlanDetailFragment"
+        android:label="Plan Detail"
+        tools:layout="@layout/fragment_plan_detail" />
+
+    <fragment
+        android:id="@+id/newPlanningFragment"
+        android:name="com.example.melb_go.ui.newPlanning.NewPlanningFragment"
+        android:label="New Planning">
+        <action
+            android:id="@+id/action_newPlanningFragment_to_selectAttractionsFragment"
+            app:destination="@id/selectAttractionsFragment" />
+        <action
+            android:id="@+id/action_newPlanningFragment_to_mapPickLocationFragment"
+            app:destination="@id/mapPickLocationFragment" />
+
+        <action
+            android:id="@+id/action_newPlanningFragment_to_optimizedRouteFragment"
+            app:destination="@id/optimizedRouteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectAttractionsFragment"
+        android:name="com.example.melb_go.ui.selectAttractions.SelectAttractionsFragment"
+        android:label="Select Attractions" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapPickLocationFragment"
+        android:name="com.example.melb_go.ui.MapPickLocation.MapPickLocationFragment"
+        android:label="Pick Location" />
+
+    <fragment
+        android:id="@+id/optimizedRouteFragment"
+        android:name="com.example.melb_go.ui.optimizedRoute.OptimizedRouteFragment"
+        android:label="Optimized Route" />
 </navigation>

@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.melb_go.api.ApiService;
-import com.example.melb_go.AttractionAdapter;
+import com.example.melb_go.adapter.AttractionAdapter;
 import com.example.melb_go.R;
 import com.example.melb_go.api.RetrofitClient;
 

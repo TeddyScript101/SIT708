@@ -93,7 +93,6 @@ public class HomeViewModel extends ViewModel {
 
     private void loadAttractions(int page, String theme) {
         isLoading = true;
-        Log.d(TAG, "Loading page: " + page + ", theme: " + theme);
         repository.fetchAttractions(token, page, theme, new TouristAttractionRepository.CallbackListener() {
             @Override
             public void onSuccess(List<TouristAttraction> data) {
@@ -121,7 +120,6 @@ public class HomeViewModel extends ViewModel {
             public void onSuccess(List data) {
                 //noinspection unchecked
                 themeList.postValue((List<String>) data);
-                Log.d(TAG, "Themes loaded: " + data);
             }
 
             @Override

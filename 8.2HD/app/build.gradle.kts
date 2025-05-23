@@ -12,7 +12,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
+        manifestPlaceholders["mapsApiKey"] = project.findProperty("MAPS_API_KEY") ?: ""
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,8 +31,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
+
 
 dependencies {
 
@@ -52,4 +54,5 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.gson)
+    implementation("com.google.maps.android:android-maps-utils:3.10.0")
 }

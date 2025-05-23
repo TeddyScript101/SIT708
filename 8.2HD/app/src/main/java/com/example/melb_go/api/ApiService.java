@@ -1,5 +1,8 @@
 package com.example.melb_go.api;
 
+import com.example.melb_go.model.OptimizedRouteDay;
+import com.example.melb_go.model.RoutesResponse;
+import com.example.melb_go.model.SaveRouteRequest;
 import com.example.melb_go.model.TouristAttraction;
 import com.example.melb_go.ui.Settings.AuthResponse;
 
@@ -49,6 +52,25 @@ public interface ApiService {
             @Header("Authorization") String token
     );
 
+    @POST("/api/optimize-route")
+    Call<ApiResponse> optimizeRoute(
+            @Header("Authorization") String token,
+            @Body OptimizeRouteRequest request
+    );
+
+    @POST("/api/optimizeRoute")
+    Call<ApiResponse> optimizeRouteMock(@Header("Authorization") String token,
+                                        @Body OptimizeRouteRequest request,
+                                        @Query("mock") boolean mock);
+
+    @POST("/api/saveRoute")
+    Call<Void> saveRoute(
+            @Header("Authorization") String token,
+            @Body SaveRouteRequest saveRouteRequest
+    );
+
+    @GET("/api/getRoutes")
+    Call<RoutesResponse> getSavedRoutes(@Header("Authorization") String token);
     @POST("/api/login")
     Call<AuthResponse> login(@Body com.example.melb_go.AuthRequest request);
 

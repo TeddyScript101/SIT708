@@ -1,25 +1,21 @@
-package com.example.melb_go;
+package com.example.melb_go.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.melb_go.BookmarkManager;
+import com.example.melb_go.R;
 import com.example.melb_go.api.ApiService;
 import com.example.melb_go.model.TouristAttraction;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.ViewHolder> {
 

@@ -33,6 +33,11 @@ public class BookmarksViewModel extends ViewModel {
             }
         });
     }
+    public void refreshBookmarks() {
+        if (repository != null) {
+            fetchBookmarks();
+        }
+    }
 
     public LiveData<List<TouristAttraction>> getBookmarks() {
         return bookmarksLiveData;

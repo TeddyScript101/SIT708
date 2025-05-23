@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.melb_go.BookmarkAdapter;
+import com.example.melb_go.adapter.BookmarkAdapter;
 import com.example.melb_go.R;
 import com.example.melb_go.api.ApiService;
 import com.example.melb_go.api.RetrofitClient;
@@ -54,19 +54,28 @@ public class BookmarksFragment extends Fragment {
             bundle.putString("attraction_id", attractionId);
             Navigation.findNavController(requireView())
                     .navigate(R.id.action_navigation_bookmarks_to_detailFragment, bundle);
-        });
+
+        },
+                () -> viewModel.refreshBookmarks());
 
         binding.bookmarkRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.bookmarkRecyclerView.setAdapter(adapter);
 
         viewModel.getBookmarks().observe(getViewLifecycleOwner(), attractions -> {
-            Log.d("BookmarksFragment", "Received bookmarks: " + (attractions != null ? attractions.size() : "null"));
+
             if (attractions != null) {
                 adapter.updateData(attractions);
             }
         });
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BookmarksViewModel viewModel = new ViewModelProvider(this).get(BookmarksViewModel.class);
+        viewModel.refreshBookmarks(); // Add this method in ViewModel
     }
 
     @Override

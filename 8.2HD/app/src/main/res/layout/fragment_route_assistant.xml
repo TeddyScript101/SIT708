@@ -1,8 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/route_assistant_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".ui.routeAssistant.RouteAssistantFragment">
 
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/startPlanningBox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/holo_blue_dark"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/startPlanningText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start A New Plan"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/retrievePlanningBox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#DDDDDD"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/retrievePlanningText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retrieve Plans"
+            android:textSize="24sp"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+</LinearLayout>
